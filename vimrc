@@ -5,14 +5,18 @@ Plug 'elmcast/elm-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'ryym/vim-riot'
 Plug 'fatih/vim-go'
+Plug 'elixir-editors/vim-elixir'
 "Plug 'itchyny/vim-haskell-indent'
 "Plug 'vim-airline/vim-airline'
 call plug#end()
 
 
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'nbouscal/vim-stylish-haskell'
+Plugin 'Chiel92/vim-autoformat'
+Plugin 'dart-lang/dart-vim-plugin'
 call vundle#end()
 
 "set termguicolors
@@ -31,6 +35,11 @@ let g:syntastic_erlc_include_path = "ebin"
 
 let g:syntastic_javascript_checkers = ['jshint']
 
+
+let dart_format_on_save = 1
+
+
+set redrawtime=10000
 syntax on
 filetype plugin indent on
 set tabstop     =4
@@ -44,9 +53,11 @@ set sessionoptions-=options
 
 set nobackup
 set noswapfile
+set nowritebackup  "only in case you don't want a backup file while editing
 set title
 set visualbell
 set noerrorbells
+
 
 set backspace=indent,eol,start
 set autoindent
