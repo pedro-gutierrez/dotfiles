@@ -5,22 +5,25 @@ Plug 'elmcast/elm-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'ryym/vim-riot'
 Plug 'fatih/vim-go'
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'thosakwe/vim-flutter'
 Plug 'elixir-editors/vim-elixir'
+Plug 'mhinz/vim-mix-format'
 "Plug 'itchyny/vim-haskell-indent'
 "Plug 'vim-airline/vim-airline'
 call plug#end()
 
 
-set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'nbouscal/vim-stylish-haskell'
-Plugin 'Chiel92/vim-autoformat'
-Plugin 'dart-lang/dart-vim-plugin'
+Plugin 'slashmili/alchemist.vim'
+Plugin 'ekalinin/Dockerfile.vim'
+Plugin 'mileszs/ack.vim'
 call vundle#end()
 
 "set termguicolors
-"colorscheme colibri
+" colorscheme colibri
 
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -35,29 +38,25 @@ let g:syntastic_erlc_include_path = "ebin"
 
 let g:syntastic_javascript_checkers = ['jshint']
 
+let g:syntastic_go_checkers = ['govet', 'errcheck', 'go']
 
-let dart_format_on_save = 1
-
-
-set redrawtime=10000
 syntax on
 filetype plugin indent on
 set tabstop     =4
-set softtabstop =4 
+set softtabstop =4
 set shiftwidth  =4
 set expandtab
 
 let g:elm_format_autosave = 1
 let g:erlang_show_errors = 1
+let dart_format_on_save = 1
 set sessionoptions-=options
 
 set nobackup
 set noswapfile
-set nowritebackup  "only in case you don't want a backup file while editing
 set title
 set visualbell
 set noerrorbells
-
 
 set backspace=indent,eol,start
 set autoindent
@@ -83,8 +82,32 @@ set statusline +=%2*0x%04B\ %*          "character under cursor
 
 set autochdir                   " Changes the cwd to the directory of the current
                                 " buffer whenever you switch buffers.
-set browsedir=current 
+set browsedir=current
 
 autocmd Filetype yaml setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype scm setlocal ts=2 sw=2 sts=2 expandtab
+autocmd Filetype dart setlocal ts=4 sw=4 sts=4 expandtab
+
 let g:syntastic_python_python_exec = 'python3'
+
+let g:mix_format_on_save = 1
+"let g:mix_format_options = '--check-formatted'
+
+source ~/.flutter.vim
+autocmd BufWritePre * %s/\s\+$//e
+
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+
+set redrawtime=10000
+set ruler
+    set showmatch
+
+nnoremap <C-Tab> :bn<CR>
+nnoremap <C-S-Tab> :bp<CR>
+
+set tw=72
+set fo+=t
