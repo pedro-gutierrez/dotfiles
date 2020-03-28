@@ -9,6 +9,8 @@ Plug 'dart-lang/dart-vim-plugin'
 Plug 'thosakwe/vim-flutter'
 Plug 'elixir-editors/vim-elixir'
 Plug 'mhinz/vim-mix-format'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'w0rp/ale'
 "Plug 'itchyny/vim-haskell-indent'
 "Plug 'vim-airline/vim-airline'
 call plug#end()
@@ -38,7 +40,7 @@ let g:syntastic_erlc_include_path = "ebin"
 
 let g:syntastic_javascript_checkers = ['jshint']
 
-let g:syntastic_go_checkers = ['govet', 'errcheck', 'go']
+let g:syntastic_go_checkers = ['errcheck', 'go']
 
 syntax on
 filetype plugin indent on
@@ -93,7 +95,7 @@ let g:syntastic_python_python_exec = 'python3'
 let g:mix_format_on_save = 1
 "let g:mix_format_options = '--check-formatted'
 
-source ~/.flutter.vim
+"source ~/.flutter.vim
 autocmd BufWritePre * %s/\s\+$//e
 
 set runtimepath^=~/.vim/bundle/ctrlp.vim
@@ -104,10 +106,34 @@ endif
 
 set redrawtime=10000
 set ruler
-    set showmatch
+set showmatch
 
 nnoremap <C-Tab> :bn<CR>
 nnoremap <C-S-Tab> :bp<CR>
 
 set tw=72
 set fo+=t
+
+set autowrite
+
+map <C-n> :cnext<CR>
+map <C-m> :cprevious<CR>
+nnoremap <leader>a :cclose<CR>
+autocmd FileType go nmap <leader>b  <Plug>(go-build)
+autocmd FileType go nmap <leader>r  <Plug>(go-run)
+autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
+autocmd FileType go nmap <Leader>i <Plug>(go-info)
+let g:go_auto_type_info = 1
+
+let g:go_list_type = "quickfix"
+let g:go_fmt_command = "goimports"
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+
+"set number
+highlight LineNr term=bold cterm=NONE ctermfg=DarkGray ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
