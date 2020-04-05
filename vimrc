@@ -10,7 +10,18 @@ Plug 'thosakwe/vim-flutter'
 Plug 'elixir-editors/vim-elixir'
 Plug 'mhinz/vim-mix-format'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
+Plug 'arcticicestudio/nord-vim'
+Plug 'ervandew/supertab'
+Plug 'vim-scripts/AutoComplPop'
+Plug 'mileszs/ack.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'vim-scripts/taglist.vim'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-easytags'
+Plug 'artur-shaik/vim-javacomplete2'
+Plug 'hdiniz/vim-gradle'
 "Plug 'itchyny/vim-haskell-indent'
 "Plug 'vim-airline/vim-airline'
 call plug#end()
@@ -135,5 +146,93 @@ let g:go_highlight_fields = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_function_calls = 1
 
-"set number
+set number
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGray ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+
+nmap =j :%!python -m json.tool<CR>
+
+colorscheme nord
+
+
+let g:fzf_action = {
+      \ 'ctrl-s': 'split',
+      \ 'ctrl-v': 'vsplit'
+      \ }
+nnoremap <c-p> :FZF<cr>
+augroup fzf
+  autocmd!
+  autocmd! FileType fzf
+  autocmd  FileType fzf set laststatus=0 noshowmode noruler
+    \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+augroup END
+
+""" This is the default extra key bindings
+""let g:fzf_action = {
+""  \ 'ctrl-t': 'tab split',
+""  \ 'ctrl-x': 'split',
+""  \ 'ctrl-v': 'vsplit' }
+""
+""" An action can be a reference to a function that processes selected lines
+""function! s:build_quickfix_list(lines)
+""  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+""  copen
+""  cc
+""endfunction
+""
+""let g:fzf_action = {
+""  \ 'ctrl-q': function('s:build_quickfix_list'),
+""  \ 'ctrl-t': 'tab split',
+""  \ 'ctrl-x': 'split',
+""  \ 'ctrl-v': 'vsplit' }
+""
+""" Default fzf layout
+""" - down / up / left / right
+""let $FZF_DEFAULT_OPTS = '--reverse'
+""let g:fzf_layout = { 'down': '~10%' }
+""
+""" You can set up fzf window using a Vim command (Neovim or latest Vim 8 required)
+""let g:fzf_layout = { 'window': 'enew' }
+""let g:fzf_layout = { 'window': '-tabnew' }
+""let g:fzf_layout = { 'window': '10new' }
+""
+""" Customize fzf colors to match your color scheme
+""" - fzf#wrap translates this to a set of `--color` options
+""let g:fzf_colors =
+""\ { 'fg':      ['fg', 'Normal'],
+""  \ 'bg':      ['bg', 'Normal'],
+""  \ 'hl':      ['fg', 'Comment'],
+""  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+""  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+""  \ 'hl+':     ['fg', 'Statement'],
+""  \ 'info':    ['fg', 'PreProc'],
+""  \ 'border':  ['fg', 'Ignore'],
+""  \ 'prompt':  ['fg', 'Conditional'],
+""  \ 'pointer': ['fg', 'Exception'],
+""  \ 'marker':  ['fg', 'Keyword'],
+""  \ 'spinner': ['fg', 'Label'],
+""  \ 'header':  ['fg', 'Comment'] }
+""
+""" Enable per-command history
+""" - History files will be stored in the specified directory
+""" - When set, CTRL-N and CTRL-P will be bound to 'next-history' and
+"""   'previous-history' instead of 'down' and 'up'.
+""let g:fzf_history_dir = '~/.local/share/fzf-history'
+
+map <C-g> :Ag <CR>
+map <C-f> :Files <CR>
+
+let g:easytags_async = 1
+
+
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
+imap <F4> <Plug>(JavaComplete-Imports-AddSmart)
+nmap <F5> <Plug>(JavaComplete-Imports-Add)
+imap <F5> <Plug>(JavaComplete-Imports-Add)
+nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
+imap <F6> <Plug>(JavaComplete-Imports-AddMissing)
+nmap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
+imap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
+
+
+"let g:ale_java_javac_executable = 'javac -cp ~/Library/ApplicationSupport/IdeaIC2019.3/lombok-plugin/lib/lombok-plugin-0.29-2019.3.jar'
