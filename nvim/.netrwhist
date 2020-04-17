@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =0
+let g:netrw_dirhist_0='/Users/pedrogutierrez/.go/src/github.com/form3tech-oss/terraform-provider-form3/form3'
+let g:netrw_dirhist_9='/Users/pedrogutierrez/.config/nvim'
+let g:netrw_dirhist_8='/Users/pedrogutierrez'
+let g:netrw_dirhist_7='/Users/pedrogutierrez/Projects/elementary'
+let g:netrw_dirhist_6='/Users/pedrogutierrez/Projects/elementary/examples/hours/modules'
+let g:netrw_dirhist_5='/Users/pedrogutierrez/Projects/elementary/examples/hours'
+let g:netrw_dirhist_4='/Users/pedrogutierrez/Projects/elementary/examples'
+let g:netrw_dirhist_3='/Users/pedrogutierrez/Projects/elementary'
+let g:netrw_dirhist_2='/Users/pedrogutierrez/.go/src/github.com/flootic/generator'
+let g:netrw_dirhist_1='/Users/pedrogutierrez/.go/src/github.com/form3tech-oss/terraform-provider-form3/form3'
