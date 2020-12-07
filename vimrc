@@ -1,65 +1,44 @@
-execute pathogen#infect()
-call plug#begin('~/.vim/plugged')
+call plug#begin("~/.vim/plugged")
+Plug 'dense-analysis/ale'
+Plug 'sheerun/vim-polyglot'
 Plug 'vim-erlang/vim-erlang-runtime'
-Plug 'elmcast/elm-vim'
-Plug 'pangloss/vim-javascript'
-Plug 'ryym/vim-riot'
-Plug 'fatih/vim-go'
-Plug 'dart-lang/dart-vim-plugin'
-Plug 'thosakwe/vim-flutter'
 Plug 'elixir-editors/vim-elixir'
 Plug 'mhinz/vim-mix-format'
-"Plug 'ctrlpvim/ctrlp.vim'
-Plug 'dense-analysis/ale'
-Plug 'arcticicestudio/nord-vim'
-Plug 'ervandew/supertab'
-Plug 'vim-scripts/AutoComplPop'
-Plug 'mileszs/ack.vim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'vim-scripts/taglist.vim'
-Plug 'majutsushi/tagbar'
-Plug 'xolox/vim-misc'
-Plug 'hdiniz/vim-gradle'
+Plug 'fatih/vim-go'
+Plug 'airblade/vim-rooter'
+Plug 'jreybert/vimagit'
 Plug 'hashivim/vim-terraform'
 Plug 'vim-syntastic/syntastic'
 Plug 'juliosueiras/vim-terraform-completion'
-Plug 'emacs-helm/helm'
-Plug 'Shougo/deoplete.nvim'
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
-Plug 'roblillack/vim-bufferlist'
-Plug 'bounceme/dim-jump'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'arcticicestudio/nord-vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
-Plug 'mihaifm/bufstop'
-Plug 'ludovicchabant/vim-gutentags'
+Plug 'rakr/vim-one'
 call plug#end()
 
 let g:python_host_prog = '/usr/bin/python'
 let g:python3_host_prog  = '/usr/local/bin/python3'
-let g:deoplete#enable_at_startup = 1
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:erlang_show_errors = 1
+let g:mix_format_on_save = 1
 
-let g:syntastic_erlc_include_path = "ebin"
+nmap =j :%!python -m json.tool<CR>
 
-let g:syntastic_javascript_checkers = ['jshint']
-
-let g:syntastic_go_checkers = ['errcheck', 'go']
+set encoding=UTF-8
 
 syntax on
+syntax enable
 filetype plugin indent on
 set tabstop     =4
 set softtabstop =4
 set shiftwidth  =4
 set expandtab
-
-let g:elm_format_autosave = 1
-let dart_format_on_save = 1
-set sessionoptions-=options
 
 set nobackup
 set noswapfile
@@ -77,138 +56,183 @@ set ignorecase
 set smartcase
 set smarttab
 
-set browsedir=current
-
-autocmd Filetype yaml setlocal ts=2 sw=2 sts=2 expandtab
-autocmd Filetype scm setlocal ts=2 sw=2 sts=2 expandtab
-autocmd Filetype dart setlocal ts=4 sw=4 sts=4 expandtab
-
-let g:syntastic_python_python_exec = 'python3'
-
-
-"" Erlang/Elixir setttings
-let g:erlang_show_errors = 1
-let g:mix_format_on_save = 1
-"let g:mix_format_options = '--check-formatted'
-
-"source ~/.flutter.vim
-autocmd BufWritePre * %s/\s\+$//e
-
-let g:ackprg = 'ag -G ''Projects|form3'' --vimgrep'
-
-set redrawtime=10000
+set redrawtime =10000
 set ruler
 set showmatch
 
-" Go to next buffer
-nnoremap <S-Tab> :bn<CR>
 
 set tw=72
 set fo+=t
 
 set autowrite
 
+set browsedir=current
 
-" Go setttings
-map <C-n> :cnext<CR>
-map <C-m> :cprevious<CR>
-nnoremap <leader>a :cclose<CR>
-autocmd FileType go nmap <leader>b  <Plug>(go-build)
-autocmd FileType go nmap <leader>r  <Plug>(go-run)
-autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
-autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
-autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
-autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
-autocmd FileType go nmap <Leader>i <Plug>(go-info)
-let g:go_auto_type_info = 1
-
-"let g:go_list_type = "quickfix"
-let g:go_fmt_command = "goimports"
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_function_calls = 1
-
-" Build/Test on save.
-augroup auto_go
-	autocmd!
-	autocmd BufWritePost *.go :GoBuild
-	"autocmd BufWritePost *_test.go :GoTest
-augroup end
-
+autocmd Filetype yaml setlocal ts=2 sw=2 sts=2 expandtab
+autocmd Filetype scm setlocal ts=2 sw=2 sts=2 expandtab
+autocmd Filetype dart setlocal ts=4 sw=4 sts=4 expandtab
 
 set number
-highlight LineNr term=bold cterm=NONE ctermfg=DarkGray ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 
-nmap =j :%!python -m json.tool<CR>
-
-colorscheme nord
-
-
-let g:fzf_action = {
-      \ 'ctrl-s': 'split',
-      \ 'ctrl-v': 'vsplit'
-      \ }
-""
-"" Configure Ag to always start searching from the project
-"" root rather than using cwd
-let g:ag_working_path_mode="c"
-
-"" FZF custom search paths
-command! SearchFile call fzf#run({'source': 'find ~/go/src/github.com/form3tech/ ~/go/src/github.com/form3tech-oss/  ~/Projects/ -type f -not -path ''*/\.git/*'' -not -path ''*/_build/*''', 'sink':  'edit', 'down': '15%'})
-
-map <C-f> :SearchFile <CR>
-
-""this will cause all splits to happen below (including term)
 set splitbelow
 
-"open a terminal, by hitting Shift-T
-map <S-T> :term <CR>
-
-
-"" Terraform configuration
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
-" (Optional)Remove Info(Preview) window
-set completeopt-=preview
-
-" (Optional)Hide Info(Preview) window after completions
-autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-
-" (Optional) Enable terraform plan to be include in filter
-let g:syntastic_terraform_tffilter_plan = 1
-
-" (Optional) Default: 0, enable(1)/disable(0) plugin's keymapping
-let g:terraform_completion_keys = 1
-
-" (Optional) Default: 1, enable(1)/disable(0) terraform module registry completion
-let g:terraform_registry_module_completion = 0
-
-
-let g:deoplete#omni_patterns = {}
-let g:deoplete#omni_patterns.terraform = '[^ *\t"{=$]\w*'
-let g:deoplete#enable_at_startup = 1
-call deoplete#initialize()
-
-" Remember open buffers
 set viminfo^=%
 
-" easy buffer switch
-map <C-B> :BufstopFast<CR>
-""map <C-B> :call BufferList()<CR>
-""let g:BufferListWidth = 25
-""let g:BufferListMaxWidth = 50
-""hi BufferSelected term=reverse ctermfg=white ctermbg=NONE cterm=bold
-""hi BufferNormal term=NONE ctermfg=gray ctermbg=NONE cterm=NONE
+set laststatus=2
 
-" status line style
-hi Search cterm=NONE ctermfg=grey ctermbg=NONE
-hi QuickFixLine cterm=NONE ctermfg=grey ctermbg=NONE
-hi StatusLine cterm=NONE ctermfg=grey ctermbg=NONE
-hi StatusLineNC cterm=NONE ctermfg=grey ctermbg=NONE
+map <C-a> :%bd <CR>
+map <C-k> :bd! <CR>
+map <C-x> :on <CR>
+"map <S-T> :term <CR>
+map <C-f> :Sexplore <CR>
+nnoremap <S-Tab> :bn<CR>
+map <C-B> :Buffers <CR>
 
-set laststatus=0
+nnoremap <C-p> :Files<CR>
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-s': 'split',
+  \ 'ctrl-v': 'vsplit'
+  \}
+" requires silversearcher-ag
+" used to ignore gitignore files
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+
+
+" open new split panes to right and below
+set splitright
+set splitbelow
+
+" turn terminal to normal mode with escape
+tnoremap <Esc> <C-\><C-n>
+
+" start terminal in insert mode
+au BufEnter * if &buftype == 'terminal' | :startinsert | endif
+
+""" Color customizations
+""colorscheme nord
+""set termguicolors
+""hi Search cterm=NONE ctermfg=grey ctermbg=NONE
+""hi Search cterm=NONE ctermfg=NONE ctermbg=NONE gui=NONE guifg=yellow guibg=#616E88
+""hi QuickFixLine cterm=NONE ctermfg=grey ctermbg=NONE
+""hi QuickFixLine cterm=NONE ctermfg=NONE ctermbg=NONE gui=NONE guifg=#616E88 guibg=NONE
+""hi StatusLine cterm=NONE ctermfg=NONE ctermbg=NONE gui=NONE guifg=#616E88 guibg=NONE
+""hi StatusLineNC cterm=NONE ctermfg=NONE ctermbg=NONE gui=NONE guifg=#616E88 guibg=NONE
+""hi LineNr term=bold cterm=NONE ctermfg=NONE ctermbg=NONE gui=NONE guifg=#616E88 guibg=NONE
+""hi LineNr term=bold ctermfg=black ctermbg=NONE gui=NONE cterm=NONE
+""hi Normal guibg=NONE ctermbg=NONE
+""hi VertSplit guibg=#2e3340 guifg=#2e3340 ctermbg=DarkGray ctermfg=black
+
+"hi Pmenu ctermfg=0 ctermbg=11
+"hi PmenuSel ctermfg=white guifg=white
+"hi PmenuThumb ctermfg=15 ctermbg=0 guifg=white guibg=DarkGrey
+
+""hi Comment ctermbg=NONE ctermfg=DarkGray
+
+set termguicolors
+set background=light
+let g:airline_theme='one'
+colorscheme one
+hi Normal guibg=NONE ctermbg=NONE
+hi SignColumn guibg=NONE
+"" Use cyan for identifiers
+call one#highlight('Identifier', '56b6c2', '', '')
+call one#highlight('yamlConstant', 'c678dd', '', '')
+
+" This unsets the last search pattern" register by hitting return
+nnoremap <CR> :noh<CR><CR>
+
+let g:netrw_browse_split = 0
+"
+au filetype go inoremap <buffer> . .<C-x><C-o>
+au filetype go noremap <buffer> <C-]> :GoDef <CR>
+
+"" COC Settings
+set cmdheight=2
+set updatetime=300
+set shortmess+=c
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
+
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+
+"" Change cursor shape
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+set showtabline=0
+set guioptions-=e
+set laststatus=2
+
+
+"" Custom utilities
+
+function! GitStatus()
+  execute "! git status"
+endfunction
+
+function! GitPushAll()
+  call inputsave()
+  call GitStatus()
+  let msg = input('[Git Push] Enter commit message: ')
+  call inputrestore()
+  execute "! git add . ; git commit -m '" . msg . "'; git push"
+endfunction
+
+noremap <S-P> :call GitPushAll() <CR>
+noremap <S-S> :call GitStatus() <CR>
+
+
+
+function! TerraformInit()
+    execute "! cd tf; terraform init"
+endfunction
+
+function! TerraformPlan()
+    execute "! cd tf; terraform plan"
+endfunction
+
+noremap <C-t>i :call TerraformInit() <CR>
+noremap <C-t>p :call TerraformPlan() <CR>
+
+
+function! SearchReplace()
+  call inputsave()
+  let file = input('[Replace] File pattern: ')
+  let search = input('[Replace] Search: ')
+  let replace = input('[Replace] Replace: ')
+  call inputrestore()
+  execute "! echo \" . file . "\""
+  execute "! find . -name \"" . file . "\" -exec sed -i '' 's/" . search . "/" . replace . "/g' {} \\;"
+endfunction
+
+noremap <C-x>s :call SearchReplace() <CR>
+
+noremap <C-x>w :%s/\s\+$//e <CR>
+
+set noshowmode
+
+function! SyntaxItem()
+  return synIDattr(synID(line("."),col("."),1),"name")
+endfunction
+
+let g:airline_section_z = '%{SyntaxItem()}'
+
+"" Show the syntax highlight group at the current cursor position
+""map <C-x>z :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+""\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+""\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
